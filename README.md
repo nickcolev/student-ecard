@@ -17,4 +17,4 @@
 
 ## Насоки
 
-За генерация на QR код може да се ползва [https://github.com/davidshimjs/qrcodejs](qrcodejs). Екипите могат да изберат друг генератор.
+За генерация на QR код може да се ползва [https://github.com/davidshimjs/qrcodejs](https://github.com/davidshimjs/qrcodejs). Екипите могат да изберат друг генератор.
