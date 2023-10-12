@@ -34,13 +34,14 @@ namespace myprog
                 catch (Exception e) { err_response("bad argument"); }
             }
         }
-        // Обща функция за връщане на грешка на клиента
+        // Общ метод за връщане на грешка на клиента
         public static void err_response(string msg)
         {
             // CGI изисква да се изпрати Mime-Type
             Console.Write("Content-Type: text/plain\n\n" + msg);
             Environment.Exit(1);
         }
+        // Метод за четене на ред от файл
         public static string GetRowFromTextFile(string fileName, int rowNumber)
         {
             using (StreamReader reader = new StreamReader(fileName))
