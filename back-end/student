@@ -1,0 +1,48 @@
+#!/bin/sh
+# Linux shell script for 'student-ecard' project
+
+FIN="${DOCUMENT_ROOT}/data/student.csv"
+
+err_response(){
+	printf "Content-Type: text/plain\n\n${1}\n"
+	exit 1
+}
+
+GetRowFromTextFile(){
+	if [ -f "${FIN}" ]; then
+		awk -v row="${QUERY_STRING}" 'FNR == row {print;exit}' "${FIN}"
+	else
+		err_response "'${FIN}' not found"
+	fi
+}
+
+rest(){
+	local row
+	read row
+	[ ! "${row}" ] && err_response "index out of range"
+	local name=`echo "${row}" | cut -d ',' -f 1`
+	local photo=`echo "${row}" | cut -d ',' -f 2`
+	local grade=`echo "${row}" | cut -d ',' -f 3`
+	cat <<HTML
+Content-Type: text/html; charset=utf-8
+
+<html><head><title>Student e-card</title></head>
+<body>
+<center>
+ПГМЕТТ "Хр. Ботев" Шумен<hr size=1>
+<table>
+<tr>
+<td><img src="/data/${photo}.png"></td>
+<td>${name}, ${grade}</td>
+</tr>
+</table>
+</body>
+</html>
+HTML
+}
+
+if [ "${QUERY_STRING}" ]; then
+	GetRowFromTextFile | rest
+else
+	err_response "usage: `basename $0`?number"
+fi
