@@ -26,10 +26,34 @@ namespace myprog
                     int r = int.Parse(qs);
                     string line = GetRowFromTextFile("student.csv", r);
                     // Изпращаме резултат на клиента (Front-End)
-                    if( line == null )
+                    if (line == null)
                         err_response("out of range");
                     else
-                        Console.Write("Content-Type: text/plain\n\n" + line);
+                    {
+                        // Делим резултата на елементи (CSV)
+                        string[] a = line.Split(',');
+                        // HTML template
+                        string tpl = @"
+Content-Type: text/html; charset=utf-8
+
+<html><head><title>Student e-card</title></head>
+<body>
+<center>
+ПГМЕТТ ""Хр. Ботев"" Шумен<hr size=1>
+<table>
+<tr>
+<td><img src=""/data/{2}.png""></td>
+<td>{1}, {3}</td>
+</tr>
+</table>
+</body>
+</html>
+HTML";
+                        // Форматираме (populate) HTML изход (REST)
+                        string htm = String.Format(tpl, a[0], a[1], a[2]);
+                        // Връщаме HTML на клиента
+                        Console.WriteLine(htm);
+                    }
                 }
                 catch (Exception e) { err_response("bad argument"); }
             }
