@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,22 +34,21 @@ namespace myprog
                         // Делим резултата на елементи (CSV)
                         string[] a = line.Split(',');
                         // HTML template
-                        string tpl = @"
-Content-Type: text/html; charset=utf-8
+                        string tpl = @"Content-Type: text/html; charset=cp1251
 
-<html><head><title>Student e-card</title></head>
+<html><head><title>Student e-card</title>
+</head>
 <body>
 <center>
 ПГМЕТТ ""Хр. Ботев"" Шумен<hr size=1>
 <table>
 <tr>
-<td><img src=""/data/{2}.png""></td>
-<td>{1}, {3}</td>
+<td><img src=""/data/{1}.png""></td>
+<td>{0}, {2}</td>
 </tr>
 </table>
 </body>
-</html>
-HTML";
+</html>";
                         // Форматираме (populate) HTML изход (REST)
                         string htm = String.Format(tpl, a[0], a[1], a[2]);
                         // Връщаме HTML на клиента
