@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Student e-card</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.25" />
+    <script type="text/javascript" src="qrcode.js"></script>
+    <style type="text/css">
+	body { font-family: sans-serif; }
+	button,input { font-size: 1.5em; }
+	nav { display: block; font-size: 10pt; font-weight: normal; } 
+    #qrcode { display: hidden; }
+    </style>
+  </head>
+  <body>
+
+  <h1>Ученическа e-карта<nav>Hosted at <a href="https://github.com/nickcolev/student-ecard">github</a></nav></h1>
+  
+  <p>
+    <input id="url" type="text" value="http://localhost/cgi-bin/student?1" style="width:50%" />
+    <button onclick="makeCode()">Generate QR</button>
+  </p>
+  <p>&nbsp;</p>
+
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="qrcode"/>
+  </svg>
+
+  <script type="text/javascript">
+  var qrcode = new QRCode(document.getElementById("qrcode"), {
+      width : 100,
+      height : 100,
+      useSVG: true
+  });
+
+  function makeCode () {		
+      var url = document.getElementById("url");
+      if (!url.value) {
+          alert("Input a text");
+          url.focus();
+          return;
+      }
+ console.log(url.value);
+      qrcode.makeCode(url.value);
+      document.getElementById("qrcode").style.display = "block";
+  }
+
+    </script>
+
+  </body>
+</html>
